@@ -55,9 +55,11 @@ const draggable = document.getElementById('draggable');
         
         // Event listeners
         draggable.addEventListener('mousedown', startDragging);
-        
+        draggable.addEventListener('touchstart', startDragging);
         document.addEventListener('mousemove', moveDraggable);
+        document.addEventListener('touchmove', moveDraggable);
         document.addEventListener('mouseup', stopDragging);
+        document.addEventListener('touchend', stopDragging);
         
         // Bouncing animation
         function bounce() {
