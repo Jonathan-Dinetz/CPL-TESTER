@@ -68,8 +68,8 @@ function bounce() {
     moveDraggable();
     requestAnimationFrame(bounce); // Continue the bouncing animation
 }
-
 bounce(); // Start the bouncing animation
+
 
 function updateClock() {
     const now = new Date();

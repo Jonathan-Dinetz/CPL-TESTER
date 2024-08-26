@@ -80,33 +80,33 @@ z-index: 200;
 @media screen and (max-width: 600px) {
 
     .coordinates {
-            font-size: 24px;
+            font-size: 20px;
         }
 
         #clock {
-            font-size: 24px;
+            font-size: 20px;
         }
 
 .info{
-    font-size: 24px;
+    font-size: 20px;
 }
 
 img {
 z-index: -100;
-width: 250px;
-height: 250px;
+width: 300px;
+height: 300px;
 }
 
 .blocker2 {
 position: absolute;
 background: transparent;
-width: 270px;
-height: 270px;
+width: 310px;
+height: 310px;
 z-index: 200;
 }
 
 .draggable {
-width: 245px;
-height: 150px;
+width: 290px;
+height: 165px;
 }
 }
