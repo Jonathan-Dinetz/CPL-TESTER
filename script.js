@@ -68,11 +68,7 @@ function startDragging(e) {
         isDragging = false;
         draggable.style.cursor = 'grab';
 
-        // Resume bouncing with the last known velocities
-        const timeElapsed = Date.now() - lastMoveTime;
-        const rect = draggable.getBoundingClientRect();
-        velocityX = (clientX - rect.left) / timeElapsed;
-        velocityY = (clientY - rect.top) / timeElapsed;
+       
     }
 }
 
