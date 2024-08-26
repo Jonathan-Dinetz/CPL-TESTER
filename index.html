@@ -3,59 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fullscreen YouTube Live</title>
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            background-color: white;
-        }
-        .video-container {
-            position: fixed;
-            top: 0vw;
-            left: 0vw;
-            height: 100vh;
-            width: 100vw;
-            background-color: white;
-
-        }
-        iframe {
-            position: absolute;
-            left: 0%;
-            width: 100%;
-            height: 100%;
-            border: none;
-            background-color: white;
-        }
-
-        .blocker {
-            position: absolute;
-            left: 0%;
-            top: 0%;
-            width: 90vw;
-            height: 90vh;
-            border: solid white;
-            border-top-width: 5vh;
-            border-bottom-width: 5vh;
-            border-right-width: 5vw;
-           border-left-width: 5vw ;
-            background-color: none;
-            z-index: 100;
-        }
-        @media only screen and (max-width: 950px) {
-                
-}
-       
-    </style>
+    <title>CPL</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+    
 <body>
-    <div class="video-container">
-        <div class="blocker"></div>
-        <iframe autoplay muted controls
-            src="https://www.youtube.com/embed/6LP5dsUaG8M?si=DQzWn2ikxiEUFMEE&amp;autoplay=1&mute=1"
-            allow="autoplay; encrypted-media"
-        ><div class="blocker"></div></iframe>
+
+    <div id="coordinates" class="coordinates">X: 0, Y: 0</div>
+   <div id="draggable" class="draggable"><div class="blocker2"></div><img src="images/CPL_logo_white.svg"></div>
+    
+    <div class="info">
+        <br>
+        Cranston Propulsion Laboratories
+        <br> 
+        Hathaway Center, Suite 99, Cranston RI 02907
+        <br>
+        +1(510)-384-6516<br>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
