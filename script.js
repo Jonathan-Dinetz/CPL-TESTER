@@ -60,7 +60,8 @@ draggable.addEventListener('touchstart', startDragging);
 document.addEventListener('mousemove', moveDraggable);
 document.addEventListener('touchmove', moveDraggable);
 document.addEventListener('mouseup', stopDragging);
-document.addEventListener('touchend', stopDragging);
+document.addEventListener('touchcancel', stopDragging);
+
 
 // Bouncing animation
 function bounce() {
@@ -69,3 +70,19 @@ function bounce() {
 }
 
 bounce(); // Start the bouncing animation
+
+function updateClock() {
+    const now = new Date();
+    const estOffset = -5 * 60; // EST offset in minutes (-5 hours from UTC)
+    const estTime = new Date(now.getTime() + (now.getTimezoneOffset() + estOffset) * 60000);
+    
+    const hours = String(estTime.getHours()).padStart(2, '0');
+    const minutes = String(estTime.getMinutes()).padStart(2, '0');
+    const seconds = String(estTime.getSeconds()).padStart(2, '0');
+    const milliseconds = String(estTime.getMilliseconds()).padStart(3, '0');
+
+    document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+}
+
+setInterval(updateClock, 1); // Update every millisecond
+updateClock(); // Initial call to display the time immediately
