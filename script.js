@@ -1,75 +1,3 @@
-const draggable = document.getElementById('draggable');
-const coordinatesDisplay = document.getElementById('coordinates');
-
-let isDragging = false;
-let offsetX, offsetY;
-let velocityX = 2, velocityY = 2; // Initial velocity for bouncing
-
-function updateCoordinates(x, y) {
-    coordinatesDisplay.textContent = `X: ${Math.round(x)}, Y: ${Math.round(y)}`;
-}
-
-function moveDraggable(e) {
-    if (isDragging) {
-        const touch = e.touches ? e.touches[0] : e;
-        draggable.style.left = `${touch.clientX - offsetX}px`;
-        draggable.style.top = `${touch.clientY - offsetY}px`;
-        updateCoordinates(touch.clientX - offsetX, touch.clientY - offsetY);
-    } else {
-        const rect = draggable.getBoundingClientRect();
-        let left = rect.left + velocityX;
-        let top = rect.top + velocityY;
-
-        // Bounce off the edges of the window
-        if (left <= 0 || left + rect.width >= window.innerWidth) {
-            velocityX = -velocityX;
-        }
-        if (top <= 0 || top + rect.height >= window.innerHeight) {
-            velocityY = -velocityY;
-        }
-
-        draggable.style.left = `${left}px`;
-        draggable.style.top = `${top}px`;
-        updateCoordinates(left, top);
-    }
-}
-
-function startDragging(e) {
-    const touch = e.touches ? e.touches[0] : e;
-    if (!isDragging) {
-        offsetX = touch.clientX - draggable.getBoundingClientRect().left;
-        offsetY = touch.clientY - draggable.getBoundingClientRect().top;
-        isDragging = true;
-        draggable.style.cursor = 'grabbing';
-    } else {
-        isDragging = false;
-        draggable.style.cursor = 'pointer';
-    }
-}
-
-function stopDragging() {
-    if (isDragging) {
-        isDragging = false;
-        draggable.style.cursor = 'pointer';
-    }
-}
-
-// Event listeners for both mouse and touch events
-draggable.addEventListener('mousedown', startDragging);
-draggable.addEventListener('touchstart', startDragging);
-document.addEventListener('mousemove', moveDraggable);
-document.addEventListener('touchmove', moveDraggable);
-document.addEventListener('mouseup', stopDragging);
-document.addEventListener('touchcancel', stopDragging);
-
-
-// Bouncing animation
-function bounce() {
-    moveDraggable();
-    requestAnimationFrame(bounce); // Continue the bouncing animation
-}
-bounce(); // Start the bouncing animation
-
 
 function updateClock() {
     const now = new Date();
@@ -86,3 +14,95 @@ function updateClock() {
 
 setInterval(updateClock, 1); // Update every millisecond
 updateClock(); // Initial call to display the time immediately
+
+const draggable = document.getElementById('draggable');
+const coordinatesDisplay = document.getElementById('coordinates');
+
+let isDragging = false;
+let offsetX, offsetY;
+let velocityX = 2, velocityY = 2; // Initial velocity for bouncing
+let lastMoveTime = null;
+
+function updateCoordinates(x, y) {
+    coordinatesDisplay.textContent = `X: ${Math.round(x)}, Y: ${Math.round(y)}`;
+}
+
+function moveDraggable() {
+    if (!isDragging) {
+        const rect = draggable.getBoundingClientRect();
+        let left = rect.left + velocityX;
+        let top = rect.top + velocityY;
+
+        // Bounce off the edges of the window
+        if (left <= 0 || left + rect.width >= window.innerWidth) {
+            velocityX = -velocityX;
+        }
+        if (top <= 0 || top + rect.height >= window.innerHeight) {
+            velocityY = -velocityY;
+        }
+
+        draggable.style.left = `${left}px`;
+        draggable.style.top = `${top}px`;
+        updateCoordinates(left, top);
+    }
+
+    requestAnimationFrame(moveDraggable); // Continue the bouncing animation
+}
+
+function startDragging(e) {
+    e.preventDefault(); // Prevent default behavior like scrolling on touch devices
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    if (!isDragging) {
+        offsetX = clientX - draggable.getBoundingClientRect().left;
+        offsetY = clientY - draggable.getBoundingClientRect().top;
+        isDragging = true;
+        draggable.style.cursor = 'grabbing';
+
+        // Temporarily stop bouncing while dragging
+        velocityX = 0;
+        velocityY = 0;
+    } else {
+        isDragging = false;
+        draggable.style.cursor = 'grab';
+
+        // Resume bouncing with the last known velocities
+        const timeElapsed = Date.now() - lastMoveTime;
+        const rect = draggable.getBoundingClientRect();
+        velocityX = (clientX - rect.left) / timeElapsed;
+        velocityY = (clientY - rect.top) / timeElapsed;
+    }
+}
+
+function drag(e) {
+    if (isDragging) {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        draggable.style.left = `${clientX - offsetX}px`;
+        draggable.style.top = `${clientY - offsetY}px`;
+        updateCoordinates(clientX - offsetX, clientY - offsetY);
+
+        lastMoveTime = Date.now();
+    }
+}
+
+function stopDragging() {
+    if (isDragging) {
+        isDragging = false;
+        draggable.style.cursor = 'grab';
+    }
+}
+
+// Event listeners
+draggable.addEventListener('mousedown', startDragging);
+draggable.addEventListener('touchstart', startDragging);
+document.addEventListener('mousemove', drag);
+document.addEventListener('touchmove', drag);
+document.addEventListener('mouseup', stopDragging);
+document.addEventListener('touchend', stopDragging);
+
+// Start the bouncing animation
+moveDraggable();
