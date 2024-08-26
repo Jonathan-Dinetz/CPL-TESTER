@@ -74,20 +74,20 @@ z-index: 200;
 
 img {
 z-index: -100;
-width: 200px;
-height: 200px;
+width: 250px;
+height: 250px;
 }
 
 .blocker2 {
 position: absolute;
 background: transparent;
-width: 220px;
-height: 220px;
+width: 270px;
+height: 270px;
 z-index: 200;
 }
 
 .draggable {
-width: 200px;
-height: 120px;
+width: 245px;
+height: 150px;
 }
 }
