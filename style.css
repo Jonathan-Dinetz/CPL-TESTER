@@ -33,7 +33,7 @@ z-index: 100;
     position: absolute;
     bottom: 10px;
     left: 10px;
-    font-family: sans-serif;
+    font-family: Arial;
     font-size: 35px;
     color: white;
     background-color: black;
@@ -77,6 +77,20 @@ height: 510px;
 z-index: 200;
 }
 
+#product-component-1725820621110{
+position: fixed;
+align-items: center;
+justify-content: start;
+padding: none;
+bottom: 150px;
+left: 0px;
+width: 180px;
+color: black;
+background-color: none;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+
 @media screen and (max-width: 600px) {
 
     .coordinates {
@@ -110,3 +124,4 @@ width: 290px;
 height: 165px;
 }
 }
+
